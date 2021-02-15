@@ -38,7 +38,6 @@ function setDifficulty(rank) {
       $gameActors.actor(1)._hp = 10
       break
   }
-
 }
 
 function $saveActor(actor) {
@@ -166,7 +165,7 @@ function getBattleResult(actor, enemy) {
 }
 
 function battle(character) {
-  let enemy = $enemies[$dataMap.events[character._eventId].name]
+  let enemy = $enemies[$dataMap.events[character._eventId].meta.enemy]
   let actor = $getActor()
   let level = actor.level
   if (enemy.def < actor.atk) {
@@ -195,17 +194,7 @@ function battle(character) {
   }
 }
 
-function battleSimulation(enemyName) {
-  let enemy = $enemies[enemyName]
-  let actor = $getActor()
-
-  if (enemy.def < actor.atk)
-    return getBattleResult(Object.assign({}, actor), Object.assign({}, enemy))
-      .damage
-  else return '???'
-}
-
-function battleTest(enemyName, actor) {
+function battleSimulation(enemyName, actor = $getActor()) {
   let enemy = $enemies[enemyName]
   if (enemy.def < actor.atk)
     return getBattleResult(Object.assign({}, actor), Object.assign({}, enemy))
@@ -213,34 +202,19 @@ function battleTest(enemyName, actor) {
   else return '???'
 }
 
-function pickUpPotion(level) {
+function pickUpPotion(character) {
+  let level = parseInt($dataMap.events[character._eventId].meta.potion, 10)
   $gameActors.actor(1)._hp += $potionList[level]
-  AudioManager.playSe({
-    name: 'Item1',
-    volume: 80,
-    pitch: 100,
-    pan: 0
-  })
 }
 
-function pickUpGem(level, paramName) {
-  addParam(paramName, $gemList[level])
-  AudioManager.playSe({
-    name: 'Miss',
-    volume: 80,
-    pitch: 100,
-    pan: 0
-  })
-}
-
-function pickUpCoin(level) {
-  $gameParty._gold += $coinList[level]
-  AudioManager.playSe({
-    name: 'Coin',
-    volume: 100,
-    pitch: 100,
-    pan: 0
-  })
+function pickUpGem(character) {
+  let nameList = {
+    红宝石: 'atk',
+    蓝宝石: 'def'
+  }
+  let name = $dataMap.events[character._eventId].name
+  let level = parseInt($dataMap.events[character._eventId].meta.gem, 10)
+  addParam(nameList[name], $gemList[level])
 }
 
 function addParam(paramName, num) {
