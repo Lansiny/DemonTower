@@ -26,7 +26,7 @@ function test(events) {
   for (let i = 0; i < events.length; i++) {
     status = `hp: ${testActor.hp}, atk: ${testActor.atk}, def: ${testActor.def}`
     if (events[i].type === 'enemy') {
-      let damage = battleTest(events[i].name, testActor)
+      let damage = battleSimulation(events[i].name, testActor)
       if (damage === '???' || damage >= testActor.hp) {
         log += `${status} \t无法战胜 ${events[i].name}, 游戏结束 \n`
       } else {

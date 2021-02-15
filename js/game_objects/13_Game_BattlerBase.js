@@ -497,20 +497,23 @@ Game_BattlerBase.prototype.paramPlus = function (paramId) {
 Game_BattlerBase.prototype.paramMin = function (paramId) {
   if (paramId === 1) {
     return 0 // MMP
-  } else {
+  } else if (paramId === 0) {
+    // MHP
     return 1
+  } else {
+    return 0
   }
 }
 
-Game_BattlerBase.prototype.paramMax = function(paramId) {
+Game_BattlerBase.prototype.paramMax = function (paramId) {
   if (paramId === 0) {
-      return 9999999999999999;  // MHP
+    return 9999999999999999 // MHP
   } else if (paramId === 1) {
-      return 9999999999999999;    // MMP
+    return 9999999999999999 // MMP
   } else {
-      return 9999999999999;
+    return 9999999999999
   }
-};
+}
 
 Game_BattlerBase.prototype.paramRate = function (paramId) {
   return this.traitsPi(Game_BattlerBase.TRAIT_PARAM, paramId)
