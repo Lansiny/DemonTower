@@ -13,7 +13,6 @@
 // 敌人
 window.$enemies = {
   绿色史莱姆: {
-    name: '绿色史莱姆',
     hp: 14,
     atk: 4,
     def: 0,
@@ -29,7 +28,6 @@ window.$enemies = {
     }
   },
   红色史莱姆: {
-    name: '红色史莱姆',
     hp: 23,
     atk: 7,
     def: 0,
@@ -45,7 +43,6 @@ window.$enemies = {
     }
   },
   小蝙蝠: {
-    name: '小蝙蝠',
     hp: 43,
     atk: 10,
     def: 2,
@@ -61,7 +58,6 @@ window.$enemies = {
     }
   },
   骷髅: {
-    name: '骷髅',
     hp: 80,
     atk: 15,
     def: 3,
@@ -77,7 +73,6 @@ window.$enemies = {
     }
   },
   见习法师: {
-    name: '见习法师',
     hp: 35,
     atk: 20,
     def: 0,
@@ -93,7 +88,6 @@ window.$enemies = {
     }
   },
   兽人: {
-    name: '兽人',
     hp: 200,
     atk: 15,
     def: 7,
@@ -109,7 +103,6 @@ window.$enemies = {
     }
   },
   黑色史莱姆: {
-    name: '黑色史莱姆',
     hp: 310,
     atk: 27,
     def: 0,
@@ -125,7 +118,6 @@ window.$enemies = {
     }
   },
   大蝙蝠: {
-    name: '大蝙蝠',
     hp: 242,
     atk: 15,
     def: 11,
@@ -141,7 +133,6 @@ window.$enemies = {
     }
   },
   骷髅战士: {
-    name: '骷髅战士',
     hp: 520,
     atk: 45,
     def: 21,
@@ -157,7 +148,6 @@ window.$enemies = {
     }
   },
   兽人武士: {
-    name: '兽人武士',
     hp: 730,
     atk: 58,
     def: 27,
@@ -173,7 +163,6 @@ window.$enemies = {
     }
   },
   初级守卫: {
-    name: '初级守卫',
     hp: 800,
     atk: 55,
     def: 35,
@@ -189,7 +178,6 @@ window.$enemies = {
     }
   },
   中级守卫: {
-    name: '中级守卫',
     hp: 2500,
     atk: 120,
     def: 90,

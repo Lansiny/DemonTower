@@ -24,28 +24,10 @@ window.$expNeedList = {
   10: 350
 }
 
-// window.$levelUpParmaList = {
-//   1: {
-//     hp: 0,
-//     atk: 0,
-//     def: 0
-//   },
-//   2: {
-//     hp: 200,
-//     atk: 2,
-//     def: 2
-//   },
-// }
-
 function levelUp(actor) {
-  // actor.hp += $levelUpParmaList[actor.level]['hp']
-  // actor.atk += $levelUpParmaList[actor.level]['atk']
-  // actor.def += $levelUpParmaList[actor.level]['def']
-
   actor.hp += actor.level * 200 + Math.floor((actor.hp * 20) / 100)
   actor.atk += actor.level * 1 + Math.floor((actor.atk * 10) / 100)
   actor.def += actor.level * 1 + Math.floor((actor.def * 10) / 100)
-
 }
 
 Game_Actor.prototype.expForLevel = function (level) {

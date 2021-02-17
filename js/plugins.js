@@ -18,6 +18,5 @@ var $plugins =
 {"name":"--------------------","status":false,"description":"","parameters":{}},
 {"name":"LEP_Game_DT_Main","status":true,"description":"LEP系列游戏 魔塔 主要逻辑函数","parameters":{}},
 {"name":"LEP_Game_DT_MapWindow","status":true,"description":"LEP游戏系列 魔塔 地图显示角色信息","parameters":{}},
-{"name":"LEP_Game_DT_EnemyManual","status":true,"description":"LEP游戏系列 魔塔 怪物图鉴","parameters":{}},
-{"name":"LEP_Game_DT_Test","status":true,"description":"LEP游戏系列 魔塔 测试用函数, 用于计算线路是否合理","parameters":{}}
+{"name":"LEP_Game_DT_EnemyManual","status":true,"description":"LEP游戏系列 魔塔 怪物图鉴","parameters":{}}
 ];
