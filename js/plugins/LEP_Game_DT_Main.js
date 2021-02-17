@@ -165,7 +165,7 @@ function getBattleResult(actor, enemy) {
 }
 
 function battle(character) {
-  let enemy = $enemies[$dataMap.events[character._eventId].meta.enemy]
+  let enemy = $enemies[$dataMap.events[character._eventId].name]
   let actor = $getActor()
   let level = actor.level
   if (enemy.def < actor.atk) {
