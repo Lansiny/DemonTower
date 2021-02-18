@@ -8,35 +8,14 @@
   <title>战斗数值计算器</title>
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <style type="text/css">
-    .box-message {
-      margin: 0 auto;
-
-      width: 600px;
-      height: 300px;
-    }
-
-    .box-message-list {
-      float: left;
-      width: 300px;
-    }
-
     .el-form-item p {
       font-size: 24px;
-      weight: 900;
     }
 
     .damage {
-      /* margin: 0 auto; */
-      /* width: 300px; */
       text-align: left;
-      weight: 600;
       font-size: 18px;
       height: 40px;
-    }
-
-    .box-result {
-      margin: 0 auto;
-      width: 600px;
     }
 
     .box-result-btn {
@@ -44,84 +23,99 @@
       font-size: 18px;
       height: 50px;
     }
-
-    .center {
-      text-align: center;
-      margin: 0 auto;
-    }
-    .float-right {
-      float: right;
-    }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div class="box-message">
-      <el-form class="box-message-list" ref="form" label-width="100px">
-        <el-form-item>
-          <p>角色属性</p>
-        </el-form-item>
-        <el-form-item label="生命值">
-          <el-input-number v-model="actor.hp" :min="1" label="生命值"></el-input-number>
-        </el-form-item>
-        <el-form-item label="攻击力">
-          <el-input-number v-model="actor.atk" :min="0" label="攻击力"></el-input-number>
-        </el-form-item>
-        <el-form-item label="防御力">
-          <el-input-number v-model="actor.def" :min="0" label="防御力"></el-input-number>
-        </el-form-item>
-      </el-form>
-      <el-form class="box-message-list" ref="form" label-width="100px">
-        <el-form-item>
-          <p>敌人属性</p>
-        </el-form-item>
-        <el-form-item label="生命值">
-          <el-input-number v-model="enemy.hp" :min="1" label="生命值"></el-input-number>
-        </el-form-item>
-        <el-form-item label="攻击力">
-          <el-input-number v-model="enemy.atk" :min="0" label="攻击力"></el-input-number>
-        </el-form-item>
-        <el-form-item label="防御力">
-          <el-input-number v-model="enemy.def" :min="0" label="防御力"></el-input-number>
-        </el-form-item>
-      </el-form>
-    </div>
-    <el-form class="box-result" ref="form" label-width="100px" :inline="true">
-      <el-form-item class="box-result-btn" label="提升数额">
-        <el-select v-model="addedHp" placeholder="请选择">
-          <el-option v-for="potion in addHpOptions" :key="potion.value" :label="potion.label" :value="potion.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item class="box-result-btn">
-        <el-button type="primary" @click="addHpp">增加生命值</el-button>
-      </el-form-item>
-    </el-form>
-    <el-form class="box-result" ref="form" label-width="100px" :inline="true">
-      <el-form-item class="box-result-btn" label="目前等级">
-        <el-input-number v-model="actor.level" :min="1" label="目前等级"></el-input-number>
-      </el-form-item>
-      <el-form-item class="box-result-btn ">
-        <el-button type="primary" @click="levelUp">角色升级</el-button>
-      </el-form-item>
-    </el-form>
-    <el-form class="box-result" ref="form" label-width="100px" :inline="true">
-      <el-form-item class="box-result-btn" label="伤害">
-        <div class="damage"> {{battleSimulation()}} </div>
-      </el-form-item>
-      <el-form-item class="box-result-btn" label="剩余生命值">
-        <div class="damage"> {{getHp()}} </div>
-      </el-form-item>
-    </el-form>
-    <el-form class="box-result center" ref="form" label-width="100px" :inline="true">
-      <el-form-item class="box-result-btn">
-        <el-button type="primary" @click="init">属性初始化</el-button>
-      </el-form-item>
-      <el-form-item class="box-result-btn">
-        <el-button type="primary" @click="saveHp">保存生命值</el-button>
-      </el-form-item>
-    </el-form>
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="6">
+        <el-form ref="form" label-width="100px">
+          <el-form-item>
+            <p>角色属性</p>
+          </el-form-item>
+          <el-form-item label="生命值">
+            <el-input-number v-model="actor.hp" :min="1" label="生命值"></el-input-number>
+          </el-form-item>
+          <el-form-item label="攻击力">
+            <el-input-number v-model="actor.atk" :min="0" label="攻击力"></el-input-number>
+          </el-form-item>
+          <el-form-item label="防御力">
+            <el-input-number v-model="actor.def" :min="0" label="防御力"></el-input-number>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="6">
+        <el-form ref="form" label-width="100px">
+          <el-form-item>
+            <p>敌人属性</p>
+          </el-form-item>
+          <el-form-item label="生命值">
+            <el-input-number v-model="enemy.hp" :min="1" label="生命值"></el-input-number>
+          </el-form-item>
+          <el-form-item label="攻击力">
+            <el-input-number v-model="enemy.atk" :min="0" label="攻击力"></el-input-number>
+          </el-form-item>
+          <el-form-item label="防御力">
+            <el-input-number v-model="enemy.def" :min="0" label="防御力"></el-input-number>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="20">
+      <el-col :span="6" :offset="6">
+        <el-form ref="form" label-width="100px" :inline="true">
+          <el-form-item class="box-result-btn" label="提升数额">
+            <el-select v-model="addedHp" placeholder="请选择">
+              <el-option v-for="potion in addHpOptions" :key="potion.value" :label="potion.label" :value="potion.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item class="box-result-btn">
+            <el-button type="primary" @click="addHpp">增加生命值</el-button>
+          </el-form-item>
+        </el-form>
+        <el-form ref="form" label-width="100px" :inline="true">
+          <el-form-item class="box-result-btn" label="目前等级">
+            <el-input-number v-model="actor.level" :min="1" label="目前等级"></el-input-number>
+          </el-form-item>
+          <el-form-item class="box-result-btn ">
+            <el-button type="primary" @click="levelUp">角色升级</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col :span="6">
+        <el-form ref="form" label-width="100px" :inline="true">
+          <el-form-item class="box-result-btn" label="设置敌人">
+            <el-select v-model="enemyName" placeholder="请选择">
+              <el-option v-for="(enemy, index) in enemies" :key="index" :label="index" :value="index">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item class="box-result-btn">
+            <el-button type="primary" @click="setEnemy">选择敌人</el-button>
+          </el-form-item>
+        </el-form>
+        <el-form ref="form" label-width="100px" :inline="true">
+          <el-form-item class="box-result-btn" label="伤害">
+            <div class="damage"> {{battleSimulation()}} </div>
+          </el-form-item>
+          <el-form-item class="box-result-btn" label="剩余生命值">
+            <div class="damage"> {{getHp()}} </div>
+          </el-form-item>
+        </el-form>
+        <el-form ref="form" label-width="100px" :inline="true">
+          <el-form-item class="box-result-btn">
+            <el-button type="primary" @click="init">属性初始化</el-button>
+          </el-form-item>
+          <el-form-item class="box-result-btn">
+            <el-button type="primary" @click="saveHp">保存生命值</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+
   </div>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_Enemies.js"></script>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_ItemList.js"></script>
@@ -135,7 +129,7 @@
       data: function () {
         return {
           // historyList: [],
-          // nowLevel: 1,
+          enemyName: '自定义敌人',
           addedHp: 30,
           addHpOptions: [{
             value: window.$potionList[1],
@@ -150,10 +144,11 @@
             value: window.$potionList[4],
             label: '+ ' + window.$potionList[4]
           }],
+          enemies: window.$enemies,
           actor: {
+            hp: 10,
             atk: 1,
             def: 0,
-            hp: 10,
             level: 1,
             exp: 0,
             skill: {
@@ -179,9 +174,18 @@
         }
       },
       methods: {
+        setEnemy: function () {
+          let enemy = this.enemies[this.enemyName]
+          this.enemy.hp = enemy.hp
+          this.enemy.atk = enemy.atk
+          this.enemy.def = enemy.def
+          this.enemy.gold = enemy.gold
+          this.enemy.exp = enemy.exp
+          this.enemy.skill = enemy.skill
+        },
         init: function () {
           this.actor = {
-            atk: 0,
+            atk: 1,
             def: 0,
             hp: 10,
             level: 1,

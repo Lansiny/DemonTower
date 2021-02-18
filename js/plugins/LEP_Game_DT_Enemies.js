@@ -12,6 +12,19 @@
 
 // 敌人
 window.$enemies = {
+  自定义敌人: {
+    hp: 10,
+    atk: 1,
+    def: 0,
+    exp: 0,
+    gold: 0,
+    skill: {
+      beforeBattle: '',
+      attack: '普通攻击',
+      defense: '无防御',
+      afterBattle: ''
+    }
+  },
   绿色史莱姆: {
     hp: 14,
     atk: 4,
