@@ -52,6 +52,12 @@
     .float-right {
       float: right;
     }
+
+    #chart {
+      margin: 16px auto;
+      width: 92vw;
+      height: 92vh;
+    }
   </style>
 </head>
 
@@ -121,12 +127,18 @@
       <el-form-item class="box-result-btn">
         <el-button type="primary" @click="saveHp">保存生命值</el-button>
       </el-form-item>
+      <el-form-item class="box-result-btn">
+        <el-button type="primary" @click="paintChart">绘制图像</el-button>
+      </el-form-item>
     </el-form>
+    <el-divider></el-divider>
+    <div id="chart" class="center"></div>
   </div>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_Enemies.js"></script>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_ItemList.js"></script>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_SkillList.js"></script>
   <script type="text/javascript" src="js/plugins/LEP_Game_DT_Main.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/plotly.js@1.58.4/dist/plotly.js'></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <script type="text/javascript">
@@ -193,6 +205,61 @@
               afterBattle: ''
             }
           }
+        },
+        paintChart: function () {
+          const atkRange = []
+          for (let i = this.enemy.def + 1; i <= this.enemy.hp; ++i) {
+            atkRange.push(i)
+          }
+
+          const defRange = []
+          for (let i = 0; i < atkRange.length; ++i) {
+            defRange.push(i)
+          }
+
+          const points = {atk: [], def: [], hpConsume: []}
+          for (let i = 0; i < atkRange.length; ++i) {
+            for (let j = 0; j < defRange.length; ++j) {
+              const damage = getBattleResult(
+                Object.assign({}, this.actor, {
+                  hp: 99999999,
+                  atk: atkRange[i],
+                  def: defRange[j] }
+                ), Object.assign({}, this.enemy))
+                .damage
+              points.atk.push(atkRange[i])
+              points.def.push(defRange[j])
+              points.hpConsume.push(damage)
+            }
+          }
+
+          const data = [
+            {
+              x: points.atk,
+              y: points.def,
+              z: points.hpConsume,
+              mode: 'markers',
+              type: 'scatter3d'
+            }
+          ]
+
+          const layout = {
+            title: '角色攻击力-防御力-消耗生命值 图像',
+            autosize: true,
+            scene: {
+              xaxis: {
+                title: '角色攻击力',
+              },
+              yaxis: {
+                title: '角色防御力'
+              },
+              zaxis: {
+                title: '角色消耗生命值'
+              }
+            }
+          }
+
+          Plotly.newPlot('chart', data, layout)
         },
         addHpp: function () {
           this.actor.hp += this.addedHp
