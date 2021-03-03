@@ -12,14 +12,39 @@
 
 // 敌人
 window.$enemies = {
-  绿色史莱姆: {
-    name: '绿色史莱姆',
-    hp: 14,
-    atk: 4,
+  自定义敌人: {
+    hp: 10,
+    atk: 1,
+    def: 0,
+    exp: 0,
+    gold: 0,
+    skill: {
+      beforeBattle: '',
+      attack: '普通攻击',
+      defense: '无防御',
+      afterBattle: ''
+    }
+  },
+  小型史莱姆: {
+    hp: 10,
+    atk: 5,
     def: 0,
     exp: 1,
-    gold: 1,
-    type: '史莱姆',
+    gold: 0,
+    ability: '无',
+    skill: {
+      beforeBattle: '',
+      attack: '普通攻击',
+      defense: '无防御',
+      afterBattle: ''
+    }
+  },
+  灰色史莱姆: {
+    hp: 22,
+    atk: 7,
+    def: 0,
+    exp: 1,
+    gold: 0,
     ability: '无技能',
     skill: {
       beforeBattle: '',
@@ -28,15 +53,13 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  红色史莱姆: {
-    name: '红色史莱姆',
-    hp: 23,
-    atk: 7,
+  粉色史莱姆: {
+    hp: 50,
+    atk: 10,
     def: 0,
     exp: 1,
-    gold: 1,
-    type: '史莱姆',
-    ability: '无技能',
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -45,30 +68,12 @@ window.$enemies = {
     }
   },
   小蝙蝠: {
-    name: '小蝙蝠',
-    hp: 43,
-    atk: 10,
-    def: 2,
-    exp: 1,
-    gold: 1,
-    type: '蝙蝠',
-    ability: '无技能',
-    skill: {
-      beforeBattle: '',
-      attack: '普通攻击',
-      defense: '无防御',
-      afterBattle: ''
-    }
-  },
-  骷髅: {
-    name: '骷髅',
     hp: 80,
     atk: 15,
     def: 3,
-    exp: 2,
-    gold: 1,
-    type: '骷髅',
-    ability: '无技能',
+    exp: 1,
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -76,14 +81,12 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  见习法师: {
-    name: '见习法师',
-    hp: 35,
+  黑暗史莱姆: {
+    hp: 80,
     atk: 20,
     def: 0,
-    exp: 2,
-    gold: 2,
-    type: '法师',
+    exp: 1,
+    gold: 0,
     ability: '魔法攻击',
     skill: {
       beforeBattle: '',
@@ -92,31 +95,13 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  兽人: {
-    name: '兽人',
+  红色史莱姆: {
     hp: 200,
     atk: 15,
-    def: 7,
-    exp: 2,
-    gold: 2,
-    type: '兽人',
-    ability: '无技能',
-    skill: {
-      beforeBattle: '',
-      attack: '普通攻击',
-      defense: '无防御',
-      afterBattle: ''
-    }
-  },
-  黑色史莱姆: {
-    name: '黑色史莱姆',
-    hp: 310,
-    atk: 27,
-    def: 0,
+    def: 5,
     exp: 1,
-    gold: 2,
-    type: '史莱姆',
-    ability: '无技能',
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -124,15 +109,27 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  大蝙蝠: {
-    name: '大蝙蝠',
-    hp: 242,
-    atk: 15,
-    def: 11,
+  圣银史莱姆_15F1: {
+    hp: 550,
+    atk: 25,
+    def: 6,
+    exp: 5,
+    gold: 0,
+    ability: '??? ??? ??? ???',
+    skill: {
+      beforeBattle: '',
+      attack: '普通攻击',
+      defense: '无防御',
+      afterBattle: ''
+    }
+  },
+  小蝙蝠: {
+    hp: 150,
+    atk: 20,
+    def: 3,
     exp: 1,
-    gold: 3,
-    type: '蝙蝠',
-    ability: '无技能',
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -140,15 +137,13 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  骷髅战士: {
-    name: '骷髅战士',
-    hp: 520,
+  骷髅: {
+    hp: 350,
     atk: 45,
-    def: 21,
+    def: 15,
     exp: 2,
-    gold: 3,
-    type: '骷髅',
-    ability: '无技能',
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -156,31 +151,27 @@ window.$enemies = {
       afterBattle: ''
     }
   },
-  兽人武士: {
-    name: '兽人武士',
-    hp: 730,
-    atk: 58,
-    def: 27,
-    exp: 2,
-    gold: 4,
-    type: '兽人',
-    ability: '无技能',
+  圣银史莱姆_14F4: {
+    hp: 800,
+    atk: 35,
+    def: 25,
+    exp: 5,
+    gold: 0,
+    ability: '史莱姆冲击 ??? ??? ???',
     skill: {
-      beforeBattle: '',
+      beforeBattle: '史莱姆冲击',
       attack: '普通攻击',
       defense: '无防御',
       afterBattle: ''
     }
   },
   初级守卫: {
-    name: '初级守卫',
     hp: 800,
     atk: 55,
     def: 35,
-    exp: 5,
-    gold: 5,
-    type: '守卫',
-    ability: '无技能',
+    exp: 3,
+    gold: 0,
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',
@@ -189,14 +180,12 @@ window.$enemies = {
     }
   },
   中级守卫: {
-    name: '中级守卫',
     hp: 2500,
     atk: 120,
     def: 90,
-    exp: 5,
+    exp: 3,
     gold: 20,
-    type: '守卫',
-    ability: '无技能',
+    ability: '无',
     skill: {
       beforeBattle: '',
       attack: '普通攻击',

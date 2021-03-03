@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Version: 1.0
+ * @Autor: Lansiny
+ * @LastEditors: Lansiny
+ * @Date: 2021-01-24 16:56:00
+ * @LastEditTime: 2021-03-03 09:08:41
+ */
 //=============================================================================
 // Lansiny Engine Plugins - Game DemonTower - SkillList
 // LEP_Game_DT_SkillList.js
@@ -21,12 +29,12 @@ window.$skill = {
         damageReceivedByB: 0
       }
     },
-    小型魔法弹: function (a, b) {
+    史莱姆冲击: function (a, b) {
       return {
         a,
         b,
         damageReceivedByA: 0,
-        damageReceivedByB: a.atk
+        damageReceivedByB: a.atk * 10
       }
     }
   },

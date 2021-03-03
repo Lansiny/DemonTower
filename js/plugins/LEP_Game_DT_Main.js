@@ -12,6 +12,7 @@
 
 function initActor() {
   $gameActors.actor(1)._hp = 1
+  // $gameActors.actor(1).level = 0
   $gameActors.actor(1)._skill = {
     beforeBattle: '',
     attack: '普通攻击',
@@ -26,16 +27,16 @@ function initActor() {
 function setDifficulty(rank) {
   switch (rank) {
     case 0:
-      $gameActors.actor(1)._hp = 10000
+      $gameActors.actor(1)._hp = 2000
       break
     case 1:
       $gameActors.actor(1)._hp = 1000
       break
     case 2:
-      $gameActors.actor(1)._hp = 100
+      $gameActors.actor(1)._hp = 200
       break
     case 3:
-      $gameActors.actor(1)._hp = 10
+      $gameActors.actor(1)._hp = 1
       break
   }
 }
@@ -70,18 +71,21 @@ function $getActorExp() {
   return `${currentExp}/${nextLevelNeedExp}`
 }
 
-function getBattleResult(actor, enemy) {
+function getBattleResult(actor, enemy, from = '战斗处理') {
   actor.shield = 0
   actor.turnTimer = 0
   actor.battleStatus = []
   enemy.shield = 0
   enemy.turnTimer = 0
   enemy.battleStatus = []
+  if (enemy == undefined) throw new Error(from + ': 找不到敌人数据！')
   let damage = 0
   let isContinue = true
   // 玩家 战前技能
   if (actor.skill.beforeBattle !== '') {
     const result = $skill.beforeBattle[actor.skill.beforeBattle](actor, enemy)
+    result.a.hp -= result.damageReceivedByA
+    result.b.hp -= result.damageReceivedByB
     actor = result.a
     enemy = result.b
     damage += result.damageReceivedByA
@@ -95,6 +99,8 @@ function getBattleResult(actor, enemy) {
   // 敌人 战前技能
   if (isContinue && enemy.skill.beforeBattle !== '') {
     const result = $skill.beforeBattle[enemy.skill.beforeBattle](enemy, actor)
+    result.a.hp -= result.damageReceivedByA
+    result.b.hp -= result.damageReceivedByB
     enemy = result.a
     actor = result.b
     damage += result.damageReceivedByB
@@ -161,17 +167,21 @@ function getBattleResult(actor, enemy) {
     }
   }
   // 返回角色与伤害数据
-  return { actor, damage }
+  return {
+    actor,
+    damage
+  }
 }
 
 function battle(character) {
-  let enemy = $enemies[$dataMap.events[character._eventId].meta.enemy]
+  let enemy = $enemies[$dataMap.events[character._eventId].name]
   let actor = $getActor()
   let level = actor.level
   if (enemy.def < actor.atk) {
     const battleResult = getBattleResult(
       Object.assign({}, actor),
-      Object.assign({}, enemy)
+      Object.assign({}, enemy),
+      '战斗处理'
     ).actor
     if (battleResult.hp > 0) {
       actor = battleResult
@@ -194,10 +204,10 @@ function battle(character) {
   }
 }
 
-function battleSimulation(enemyName, actor = $getActor()) {
+function battleSimulation(enemyName, actor = $getActor(), from = '战斗模拟') {
   let enemy = $enemies[enemyName]
   if (enemy.def < actor.atk)
-    return getBattleResult(Object.assign({}, actor), Object.assign({}, enemy))
+    return getBattleResult(Object.assign({}, actor), Object.assign({}, enemy), from)
       .damage
   else return '???'
 }
