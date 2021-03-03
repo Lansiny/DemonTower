@@ -9,7 +9,6 @@
  * @author lansiny
  *
  */
-
 function Window_MapStatus() {
   this.initialize.apply(this, arguments)
 }

@@ -69,7 +69,7 @@
 
   Window_EnemyManual.prototype.refresh = function () {
     this._list = []
-    let list = []
+    let nameList = []
     let eventList = {}
     for (let i = 1; i < $gameMap._events.length; i++) {
       if ($gameMap._events[i]) {
@@ -80,18 +80,18 @@
             data: eventData,
             status: eventStatus
           }
-          list.push(eventData.name)
+          nameList.push(eventData.name)
         }
-      } else continue
-    }
-    let enemyList = Array.from(new Set(list))
-    for (let i = 0; i < enemyList.length; i++) {
-      let enemy = {
-        param: $enemies[enemyList[i]],
-        event: eventList[enemyList[i]],
-        damage: battleSimulation($enemies[enemyList[i]].name)
       }
-      this._list.push(enemy)
+    }
+    let enemyTypeList = Array.from(new Set(nameList))
+    for (let i = 0; i < enemyTypeList.length; i++) {
+      this._list.push({
+        name: enemyTypeList[i],
+        param: $enemies[enemyTypeList[i]],
+        event: eventList[enemyTypeList[i]],
+        damage: battleSimulation(enemyTypeList[i])
+      })
     }
     this._list.sort(compare())
     this.createContents()
@@ -120,23 +120,18 @@
       let lineHeight = this.lineHeight()
       let y = rect.y
       let x = rect.x
-
       let imageInfo = enemy.event.data.pages[0].image
       let bitmap = ImageManager.loadCharacter(imageInfo.characterName)
       let pw = 48
       let ph = 48
-
       let sx = imageInfo.characterIndex * 144 + 48
       let sy = (imageInfo.direction / 2) * 48 - 48
       this.contents.blt(bitmap, sx, sy, pw, ph, (x + 140) / 2 - 24, y + 30)
-
       this.contents.fontSize = 18
       this.changeTextColor(this.normalColor())
-      this.drawText(enemy.param.name, x, y, 140, 'center')
+      this.drawText(enemy.name, x, y, 140, 'center')
       this.contents.fontSize = 20
-
       let fontWidth = 28
-
       this.changeTextColor(this.systemColor())
       this.drawText('生命值', x + 140 + 10, y, fontWidth * 3)
       this.drawText('攻击', x + 140 + fontWidth * 7 + 20, y, fontWidth * 2)
@@ -199,33 +194,5 @@
   Scene_Menu.prototype.start = function () {
     Scene_MenuBase.prototype.start.call(this)
     this._ManualWindow.refresh()
-  }
-
-  //创建命令窗口
-  Scene_Menu.prototype.createCommandWindow = function () {
-    this._commandWindow = new Window_MenuCommand(0, 0)
-    this._commandWindow.setHandler('item', this.commandItem.bind(this))
-    this._commandWindow.setHandler('skill', this.commandSkill.bind(this))
-    this._commandWindow.setHandler('equip', this.commandEquip.bind(this))
-    this._commandWindow.setHandler('status', this.commandStatus.bind(this))
-    this._commandWindow.setHandler(
-      'formation',
-      this.commandFormation.bind(this)
-    )
-    this._commandWindow.setHandler('options', this.commandOptions.bind(this))
-    this._commandWindow.setHandler('save', this.commandSave.bind(this))
-    this._commandWindow.setHandler('gameEnd', this.commandGameEnd.bind(this))
-    this._commandWindow.setHandler('cancel', this.popScene.bind(this))
-    this.addWindow(this._commandWindow)
-  }
-
-  Scene_Menu.prototype.commandSkill = function () {
-    SceneManager.push(Scene_Skill)
-  }
-  Scene_Menu.prototype.commandEquip = function () {
-    SceneManager.push(Scene_Equip)
-  }
-  Scene_Menu.prototype.commandStatus = function () {
-    SceneManager.push(Scene_Status)
   }
 })()
