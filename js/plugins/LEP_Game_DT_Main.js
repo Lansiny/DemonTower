@@ -80,12 +80,13 @@ function getBattleResult(enemyName, actor, from = '战斗处理') {
   enemy.shield = 0
   enemy.turnTimer = 0
   enemy.battleStatus = []
-  if ($enemies[enemyName].skill) {
+  let enemySkill = $enemies[enemyName].skill
+  if (enemySkill) {
     enemy.skill = {
-      beforeBattle: $enemies[enemyName].skill.beforeBattle ? $enemies[enemyName].skill.beforeBattle : '',
-      attack: $enemies[enemyName].skill.attack ? $enemies[enemyName].skill.attack : '',
-      defense: $enemies[enemyName].skill.defense ? $enemies[enemyName].skill.defense : '',
-      afterBattle: $enemies[enemyName].skill.afterBattle ? $enemies[enemyName].skill.afterBattle : ''
+      beforeBattle: enemySkill.beforeBattle ? enemySkill.beforeBattle : '',
+      attack: enemySkill.attack ? enemySkill.attack : '',
+      defense: enemySkill.defense ? enemySkill.defense : '',
+      afterBattle: enemySkill.afterBattle ? enemySkill.afterBattle : ''
     }
   } else {
     enemy.skill = {

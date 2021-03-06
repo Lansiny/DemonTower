@@ -4,7 +4,7 @@
  * @Autor: Lansiny
  * @LastEditors: Lansiny
  * @Date: 2021-03-03 11:43:35
- * @LastEditTime: 2021-03-06 12:30:48
+ * @LastEditTime: 2021-03-06 15:35:28
  */
 //=============================================================================
 // Lansiny Engine Plugins - Game DemonTower - Enemies
@@ -72,15 +72,15 @@ window.$enemies = {
     exp: 1,
     gold: 0
   },
-  圣银史莱姆_15F1: {
+  白银史莱姆_15F1: {
     hp: 550,
     atk: 25,
     def: 6,
     exp: 5,
     gold: 0,
-    ability: '精英',
+    ability: '精英'
   },
-  圣银史莱姆_14F4: {
+  白银史莱姆_14F4: {
     hp: 800,
     atk: 35,
     def: 25,
@@ -91,4 +91,8 @@ window.$enemies = {
       beforeBattle: '史莱姆冲击'
     }
   }
+}
+
+for (const enemyName in window.$enemies) {
+  window.$enemies[enemyName].name = enemyName.split('_')[0]
 }

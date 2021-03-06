@@ -88,7 +88,6 @@
     let enemyTypeList = Array.from(new Set(nameList))
     for (let i = 0; i < enemyTypeList.length; i++) {
       this._list.push({
-        name: enemyTypeList[i],
         param: $enemies[enemyTypeList[i]],
         event: eventList[enemyTypeList[i]],
         damage: battleSimulation(enemyTypeList[i], $getActor(), '敌人图鉴')
@@ -125,12 +124,12 @@
       let bitmap = ImageManager.loadCharacter(imageInfo.characterName)
       let pw = 48
       let ph = 48
-      let sx = imageInfo.characterIndex * 144 + 48
-      let sy = (imageInfo.direction / 2) * 48 - 48
-      this.contents.blt(bitmap, sx, sy, pw, ph, (x + 140) / 2 - 24, y + 30)
+      let sx = imageInfo.characterIndex % 4 * 144 + 48
+      let sy = (imageInfo.direction / 2) * 48 - 48 + (imageInfo.characterIndex > 3 ? 192 : 0)
+        this.contents.blt(bitmap, sx, sy, pw, ph, (x + 140) / 2 - 24, y + 30)
       this.contents.fontSize = 18
       this.changeTextColor(this.normalColor())
-      this.drawText(enemy.name, x, y, 140, 'center')
+      this.drawText(enemy.param.name, x, y, 140, 'center')
       this.contents.fontSize = 20
       let fontWidth = 28
       this.changeTextColor(this.systemColor())
@@ -174,11 +173,14 @@
         fontWidth * 4
       )
       let ability = enemy.param.ability ? enemy.param.ability + ' ' : ''
-      let beforeBattleSkill = enemy.param.skill.beforeBattle ? enemy.param.skill.beforeBattle + ' ' : ''
-      let attackSkill = enemy.param.skill.attack ? enemy.param.skill.attack + ' ' : ''
-      let defenseSkill = enemy.param.skill.defense ? enemy.param.skill.defense + ' ' : ''
-      let afterBattleSkill = enemy.param.skill.afterBattle ? enemy.param.skill.afterBattle + ' ' : ''
-      let abilityStr = `${ability}${beforeBattleSkill}${attackSkill}${defenseSkill}${afterBattleSkill}`
+      let abilityStr = ability
+      if (enemy.param.skill) {
+        let beforeBattleSkill = enemy.param.skill.beforeBattle ? enemy.param.skill.beforeBattle + ' ' : ''
+        let attackSkill = enemy.param.skill.attack ? enemy.param.skill.attack + ' ' : ''
+        let defenseSkill = enemy.param.skill.defense ? enemy.param.skill.defense + ' ' : ''
+        let afterBattleSkill = enemy.param.skill.afterBattle ? enemy.param.skill.afterBattle + ' ' : ''
+        abilityStr = `${ability}${beforeBattleSkill}${attackSkill}${defenseSkill}${afterBattleSkill}`
+      }
       this.drawText(
         abilityStr ? abilityStr : '无',
         x + 140 + fontWidth * 9 + 12,
