@@ -71,7 +71,7 @@ function $getActorExp() {
   return `${currentExp}/${nextLevelNeedExp}`
 }
 
-function getBattleResult(enemyName, actor, from = '战斗处理') {
+function getBattleResult(enemyName， actor, from = '战斗处理') {
   let enemy = Object.assign({}, $enemies[enemyName])
   if (enemy == undefined) throw new Error(from + ': 找不到敌人数据！')
   actor.shield = 0
@@ -95,7 +95,7 @@ function getBattleResult(enemyName, actor, from = '战斗处理') {
       afterBattle: ''
     }
   }
-  enemy.ability = $enemies[enemyName].ability ? $enemies[enemyName].ability : ''
+
   let damage = 0
   let isContinue = true
   // 玩家 战前技能

@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Version: 1.0
+ * @Autor: Lansiny
+ * @LastEditors: Lansiny
+ * @Date: 2021-03-03 10:53:00
+ * @LastEditTime: 2021-03-03 12:19:09
+ */
 //=============================================================================
 // Lansiny Engine Plugins - Game DemonTower - ItemList
 // LEP_Game_DT_ItemList.js
@@ -12,16 +20,13 @@
 
 // 宝石
 window.$gemList = {
-  1: 1,
-  2: 2
+  1: 1
 }
 
 // 药水
 window.$potionList = {
-  1: 30,
-  2: 100,
-  3: 150,
-  4: 400
+  1: 150,
+  2: 400
 }
 
 // 金币

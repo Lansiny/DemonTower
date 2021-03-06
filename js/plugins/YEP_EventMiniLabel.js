@@ -304,11 +304,13 @@ Window_EventMiniLabel.prototype.gatherDisplayData = function () {
   if (!this._character.page()) {
     return (this.visible = false)
   }
-
-  let enemy = $dataMap.events[this._character._eventId].meta.enemy
   let comment = ''
-  if (enemy && this._pageIndex === 0)
-    comment += `<Mini Label: \\compare9<battleSimulation('${enemy}'):$getActor().hp>\\evalText<<battleSimulation('${enemy}')>>>\n`
+  if ($dataMap.events[this._character._eventId].meta.enemy === 'enemy') {
+    let enemy = $dataMap.events[this._character._eventId].name
+    if (enemy && this._pageIndex === 0)
+      comment += `<Mini Label: \\compare9<battleSimulation('${enemy}', $getActor(), '伤害显示'):$getActor().hp>\\evalText<<battleSimulation('${enemy}', $getActor(), '伤害显示')>>>\n`
+  }
+
   var list = this._character.list()
   var max = list.length
   for (var i = 0; i < max; ++i) {

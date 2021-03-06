@@ -130,7 +130,7 @@
         return {
           // historyList: [],
           enemyName: '自定义敌人',
-          addedHp: 30,
+          addedHp: 150,
           addHpOptions: [{
             value: window.$potionList[1],
             label: '+ ' + window.$potionList[1]
@@ -211,7 +211,8 @@
           else return '???'
         },
         getHp() {
-          return this.battleSimulation() === '???' ? 0 : (this.battleSimulation() >= this.actor.hp ? 0 : this.actor.hp - this.battleSimulation())
+          return this.battleSimulation() === '???' ? 0 : (this.battleSimulation() >= this.actor.hp ? 0 : this.actor
+            .hp - this.battleSimulation())
         },
         levelUp() {
           this.actor.level += 1

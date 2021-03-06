@@ -4,7 +4,7 @@
  * @Autor: Lansiny
  * @LastEditors: Lansiny
  * @Date: 2021-01-24 16:56:00
- * @LastEditTime: 2021-03-03 09:08:41
+ * @LastEditTime: 2021-03-05 21:02:14
  */
 //=============================================================================
 // Lansiny Engine Plugins - Game DemonTower - SkillList
@@ -21,14 +21,6 @@
 window.$skill = {
   // a 是 发起者
   beforeBattle: {
-    '': function (a, b) {
-      return {
-        a,
-        b,
-        damageReceivedByA: 0,
-        damageReceivedByB: 0
-      }
-    },
     史莱姆冲击: function (a, b) {
       return {
         a,

@@ -9,7 +9,8 @@
  * @author lansiny
  *
  */
-;(function () {
+;
+(function () {
   let _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand
   Game_Interpreter.prototype.pluginCommand = function (command, args) {
     _Game_Interpreter_pluginCommand.call(this, command, args)
@@ -90,7 +91,7 @@
         name: enemyTypeList[i],
         param: $enemies[enemyTypeList[i]],
         event: eventList[enemyTypeList[i]],
-        damage: battleSimulation(enemyTypeList[i])
+        damage: battleSimulation(enemyTypeList[i], $getActor(), '敌人图鉴')
       })
     }
     this._list.sort(compare())
@@ -100,13 +101,13 @@
 
   function compare() {
     return function (a, b) {
-      var value1 = a['damage']
-      var value2 = b['damage']
-      if (value1 === '???' && value2 !== '???') return value1 - value2
-      else if (value1 !== '???' && value2 === '???') return value1 - value2
+      let value1 = a.damage
+      let value2 = b.damage
+      if (value1 === '???' && value2 !== '???') return -1
+      else if (value1 !== '???' && value2 === '???') return 1
       else if (value1 === '???' && value2 === '???') {
-        var value1 = a['param']['hp']
-        var value2 = b['param']['hp']
+        let value1 = a.param.hp
+        let value2 = b.param.hp
         return value1 - value2
       }
       return value1 - value2
@@ -172,8 +173,14 @@
         y + lineHeight,
         fontWidth * 4
       )
+      let ability = enemy.param.ability ? enemy.param.ability + ' ' : ''
+      let beforeBattleSkill = enemy.param.skill.beforeBattle ? enemy.param.skill.beforeBattle + ' ' : ''
+      let attackSkill = enemy.param.skill.attack ? enemy.param.skill.attack + ' ' : ''
+      let defenseSkill = enemy.param.skill.defense ? enemy.param.skill.defense + ' ' : ''
+      let afterBattleSkill = enemy.param.skill.afterBattle ? enemy.param.skill.afterBattle + ' ' : ''
+      let abilityStr = `${ability}${beforeBattleSkill}${attackSkill}${defenseSkill}${afterBattleSkill}`
       this.drawText(
-        `${enemy.param.type}系 ${enemy.param.ability}`,
+        abilityStr ? abilityStr : '无',
         x + 140 + fontWidth * 9 + 12,
         y + lineHeight,
         this.width - (x + 140 + fontWidth * 9 + 20)
