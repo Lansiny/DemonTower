@@ -94,7 +94,7 @@
             </el-select>
           </el-form-item>
           <el-form-item class="box-result-btn">
-            <el-button type="primary" @click="setEnemy">选择敌人</el-button>
+            <el-button type="primary" @click="resetEnemy">重置敌人</el-button>
           </el-form-item>
         </el-form>
         <el-form ref="form" label-width="100px" :inline="true">
@@ -168,7 +168,17 @@
         }
       },
       methods: {
+        resetEnemy: function () {
+          let enemy = this.enemies[this.enemyName]
+          this.enemy.hp = enemy.hp
+          this.enemy.atk = enemy.atk
+          this.enemy.def = enemy.def
+          this.enemy.gold = enemy.gold
+          this.enemy.exp = enemy.exp
+          this.enemy.skill = enemy.skill
+        },
         setEnemy: function (data) {
+          this.enemyName = data
           let enemy = this.enemies[data]
           this.enemy.hp = enemy.hp
           this.enemy.atk = enemy.atk
