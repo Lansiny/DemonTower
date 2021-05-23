@@ -29,35 +29,35 @@ window.$enemies = {
   },
   小型史莱姆: {
     hp: 10,
-    atk: 5,
+    atk: 6,
     def: 0,
     exp: 1,
     gold: 0
   },
   灰色史莱姆: {
-    hp: 22,
+    hp: 25,
     atk: 7,
     def: 0,
     exp: 1,
     gold: 0
   },
   粉色史莱姆: {
-    hp: 50,
-    atk: 10,
+    hp: 80,
+    atk: 15,
     def: 0,
     exp: 1,
     gold: 0
   },
   小蝙蝠: {
-    hp: 80,
-    atk: 15,
+    hp: 100,
+    atk: 18,
     def: 3,
     exp: 1,
     gold: 0
   },
   黑暗史莱姆: {
-    hp: 80,
-    atk: 20,
+    hp: 70,
+    atk: 30,
     def: 0,
     exp: 1,
     gold: 0,
@@ -67,7 +67,7 @@ window.$enemies = {
   },
   骷髅: {
     hp: 200,
-    atk: 15,
+    atk: 20,
     def: 5,
     exp: 1,
     gold: 0

@@ -88,7 +88,7 @@
       <el-col :span="6">
         <el-form ref="form" label-width="100px" :inline="true">
           <el-form-item class="box-result-btn" label="设置敌人">
-            <el-select v-model="enemyName" placeholder="请选择">
+            <el-select v-model="enemyName" placeholder="请选择" @change="setEnemy">
               <el-option v-for="(enemy, index) in enemies" :key="index" :label="index" :value="index">
               </el-option>
             </el-select>
@@ -137,12 +137,6 @@
           }, {
             value: window.$potionList[2],
             label: '+ ' + window.$potionList[2]
-          }, {
-            value: window.$potionList[3],
-            label: '+ ' + window.$potionList[3]
-          }, {
-            value: window.$potionList[4],
-            label: '+ ' + window.$potionList[4]
           }],
           enemies: window.$enemies,
           actor: {
@@ -174,8 +168,8 @@
         }
       },
       methods: {
-        setEnemy: function () {
-          let enemy = this.enemies[this.enemyName]
+        setEnemy: function (data) {
+          let enemy = this.enemies[data]
           this.enemy.hp = enemy.hp
           this.enemy.atk = enemy.atk
           this.enemy.def = enemy.def
@@ -205,14 +199,12 @@
           this.actor.hp = this.getHp()
         },
         battleSimulation: function () {
-          if (this.enemy.def < this.actor.atk)
-            return getBattleResult(this.enemyName, Object.assign({}, this.actor))
-              .damage
+          if (this.enemy.def < this.actor.atk) return getBattleResult(this.enemyName, Object.assign({}, this.actor)).damage
           else return '???'
         },
         getHp() {
-          return this.battleSimulation() === '???' ? 0 : (this.battleSimulation() >= this.actor.hp ? 0 : this.actor
-            .hp - this.battleSimulation())
+          const result = this.battleSimulation()
+          return result === '???' || result >= this.actor.hp ? 0 : this.actor.hp - result
         },
         levelUp() {
           this.actor.level += 1
