@@ -268,3 +268,18 @@ function getPickUpKeyType(character) {
       return 0
   }
 }
+
+function getDoorType(character) {
+  switch ($dataMap.events[character._eventId].name) {
+    case '黄钥匙':
+      return 1
+    case '蓝钥匙':
+      return 2
+    case '红钥匙':
+      return 3
+    case '绿钥匙':
+      return 4
+    default:
+      return 0
+  }
+}
