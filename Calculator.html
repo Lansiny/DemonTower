@@ -206,7 +206,7 @@
         },
         battleSimulation: function () {
           if (this.enemy.def < this.actor.atk)
-            return getBattleResult(Object.assign({}, this.actor), Object.assign({}, this.enemy))
+            return getBattleResult(this.enemyName, Object.assign({}, this.actor))
               .damage
           else return '???'
         },
