@@ -57,7 +57,7 @@ window.$enemies = {
   },
   黑暗史莱姆: {
     hp: 70,
-    atk: 30,
+    atk: 20,
     def: 0,
     exp: 1,
     gold: 0,

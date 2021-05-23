@@ -35,13 +35,13 @@
             <p>角色属性</p>
           </el-form-item>
           <el-form-item label="生命值">
-            <el-input-number v-model="actor.hp" :min="1" label="生命值"></el-input-number>
+            <el-input-number v-model="actor.hp" :min="1" label="生命值" @input="input"></el-input-number>
           </el-form-item>
           <el-form-item label="攻击力">
-            <el-input-number v-model="actor.atk" :min="0" label="攻击力"></el-input-number>
+            <el-input-number v-model="actor.atk" :min="0" label="攻击力" @input="input"></el-input-number>
           </el-form-item>
           <el-form-item label="防御力">
-            <el-input-number v-model="actor.def" :min="0" label="防御力"></el-input-number>
+            <el-input-number v-model="actor.def" :min="0" label="防御力" @input="input"></el-input-number>
           </el-form-item>
         </el-form>
       </el-col>
@@ -51,13 +51,13 @@
             <p>敌人属性</p>
           </el-form-item>
           <el-form-item label="生命值">
-            <el-input-number v-model="enemy.hp" :min="1" label="生命值"></el-input-number>
+            <el-input-number v-model="enemy.hp" :min="1" label="生命值" @input="input"></el-input-number>
           </el-form-item>
           <el-form-item label="攻击力">
-            <el-input-number v-model="enemy.atk" :min="0" label="攻击力"></el-input-number>
+            <el-input-number v-model="enemy.atk" :min="0" label="攻击力" @input="input"></el-input-number>
           </el-form-item>
           <el-form-item label="防御力">
-            <el-input-number v-model="enemy.def" :min="0" label="防御力"></el-input-number>
+            <el-input-number v-model="enemy.def" :min="0" label="防御力" @input="input"></el-input-number>
           </el-form-item>
         </el-form>
       </el-col>
@@ -81,7 +81,7 @@
             <el-input-number v-model="actor.level" :min="1" label="目前等级"></el-input-number>
           </el-form-item>
           <el-form-item class="box-result-btn ">
-            <el-button type="primary" @click="levelUp">角色升级</el-button>
+            <el-button type="primary" @click="levelUp">升级</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -99,10 +99,10 @@
         </el-form>
         <el-form ref="form" label-width="100px" :inline="true">
           <el-form-item class="box-result-btn" label="伤害">
-            <div class="damage"> {{battleSimulation()}} </div>
+            <div class="damage"> {{harm}} </div>
           </el-form-item>
           <el-form-item class="box-result-btn" label="剩余生命值">
-            <div class="damage"> {{getHp()}} </div>
+            <div class="damage"> {{restHp}} </div>
           </el-form-item>
         </el-form>
         <el-form ref="form" label-width="100px" :inline="true">
@@ -129,6 +129,8 @@
       data: function () {
         return {
           // historyList: [],
+          harm: 0,
+          restHp: 0,
           enemyName: '自定义敌人',
           addedHp: 150,
           addHpOptions: [{
@@ -168,7 +170,7 @@
         }
       },
       methods: {
-        resetEnemy: function () {
+        resetEnemy() {
           let enemy = this.enemies[this.enemyName]
           this.enemy.hp = enemy.hp
           this.enemy.atk = enemy.atk
@@ -176,8 +178,12 @@
           this.enemy.gold = enemy.gold
           this.enemy.exp = enemy.exp
           this.enemy.skill = enemy.skill
+          this.battleSimulation()
         },
-        setEnemy: function (data) {
+        input(data) {
+          this.battleSimulation()
+        },
+        setEnemy(data) {
           this.enemyName = data
           let enemy = this.enemies[data]
           this.enemy.hp = enemy.hp
@@ -186,8 +192,9 @@
           this.enemy.gold = enemy.gold
           this.enemy.exp = enemy.exp
           this.enemy.skill = enemy.skill
+          this.battleSimulation()
         },
-        init: function () {
+        init() {
           this.actor = {
             atk: 1,
             def: 0,
@@ -202,25 +209,31 @@
             }
           }
         },
-        addHpp: function () {
+        addHpp() {
           this.actor.hp += this.addedHp
+          this.battleSimulation()
         },
-        saveHp: function () {
+        saveHp() {
           this.actor.hp = this.getHp()
+          this.battleSimulation()
         },
-        battleSimulation: function () {
-          if (this.enemy.def < this.actor.atk) return getBattleResult(this.enemyName, Object.assign({}, this.actor)).damage
-          else return '???'
-        },
-        getHp() {
-          const result = this.battleSimulation()
-          return result === '???' || result >= this.actor.hp ? 0 : this.actor.hp - result
+        battleSimulation() {
+          let harm = 0
+          if (this.enemy.def < this.actor.atk) {
+            harm = getBattleResult(Object.assign({}, this.enemy), Object.assign({}, this.actor)).damage
+          }
+          else {
+            harm = '???'
+          }
+          this.harm = harm
+          this.restHp = harm === '???' || harm >= this.actor.hp ? 0 : this.actor.hp - harm
         },
         levelUp() {
           this.actor.level += 1
           this.actor.hp += this.actor.level * 200 + Math.floor((this.actor.hp * 20) / 100)
           this.actor.atk += this.actor.level * 1 + Math.floor((this.actor.atk * 10) / 100)
           this.actor.def += this.actor.level * 1 + Math.floor((this.actor.def * 10) / 100)
+          this.battleSimulation()
         }
       }
     })

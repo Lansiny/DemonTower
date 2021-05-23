@@ -71,8 +71,7 @@ function $getActorExp() {
   return `${currentExp}/${nextLevelNeedExp}`
 }
 
-function getBattleResult(enemyName, actor, from = '战斗处理') {
-  let enemy = Object.assign({}, $enemies[enemyName])
+function getBattleResult(enemy, actor, from = '战斗处理') {
   if (enemy == undefined) throw new Error(from + ': 找不到敌人数据！')
   actor.shield = 0
   actor.turnTimer = 0
@@ -80,13 +79,12 @@ function getBattleResult(enemyName, actor, from = '战斗处理') {
   enemy.shield = 0
   enemy.turnTimer = 0
   enemy.battleStatus = []
-  let enemySkill = $enemies[enemyName].skill
-  if (enemySkill) {
+  if (enemy.skill) {
     enemy.skill = {
-      beforeBattle: enemySkill.beforeBattle ? enemySkill.beforeBattle : '',
-      attack: enemySkill.attack ? enemySkill.attack : '',
-      defense: enemySkill.defense ? enemySkill.defense : '',
-      afterBattle: enemySkill.afterBattle ? enemySkill.afterBattle : ''
+      beforeBattle: enemy.skill.beforeBattle ? enemy.skill.beforeBattle : '',
+      attack: enemy.skill.attack ? enemy.skill.attack : '',
+      defense: enemy.skill.defense ? enemy.skill.defense : '',
+      afterBattle: enemy.skill.afterBattle ? enemy.skill.afterBattle : ''
     }
   } else {
     enemy.skill = {
@@ -96,7 +94,7 @@ function getBattleResult(enemyName, actor, from = '战斗处理') {
       afterBattle: ''
     }
   }
-  enemy.ability = $enemies[enemyName].ability ? $enemies[enemyName].ability : ''
+  enemy.ability = enemy.ability ? enemy.ability : ''
   let damage = 0
   let isContinue = true
   // 玩家 战前技能
@@ -196,7 +194,7 @@ function battle(character) {
   let level = actor.level
   if (enemy.def < actor.atk) {
     const battleResult = getBattleResult(
-      enemyName,
+      Object.assign({}, enemy),
       Object.assign({}, actor),
       '战斗处理'
     ).actor
@@ -223,7 +221,7 @@ function battle(character) {
 
 function battleSimulation(enemyName, actor = $getActor(), from = '战斗模拟') {
   let enemy = $enemies[enemyName]
-  if (enemy.def < actor.atk) return getBattleResult(enemyName, actor, from).damage
+  if (enemy.def < actor.atk) return getBattleResult(Object.assign({}, enemy), actor, from).damage
   else return '???'
 }
 
